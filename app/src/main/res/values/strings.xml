@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">PimpleDetectKu</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Pimple Detector</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="welcome">Selamat Datang</string>
+    <string name="introduce">Saya adalah robot Kecerdasan Buatan\nyang diciptakan untuk menganalisis\njerawat pada wajah anda. Saya bisa\nberpikir dan mempelajari jenis jerawat\nanda, tetapi saya masih dapat\nberkembang.Tolong bersikap baiklah\nkepada saya!\nSaya tidak menjamin akurasi hasil saya,\nsilahkan hubungi dokter untuk mendapat\nnasihat medis yang sebenarnya</string>
+    <string name="start">AYO MULAI!</string>
+    <string name="jenis_jerawat">Jenis Jerawat</string>
+    <string name="solusi_jerawat">Solusi Jerawat</string>
+    <string name="about_us">Tentang Kami</string>
+    <string name="info">Info</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_jenis">Jenis Jerawat</string>
+    <string name="menu_solusi">Solusi Jerawat</string>
+    <string name="menu_about">Tentang Kami</string>
+    <string name="menu_home">Home</string>
+    <string name="title_app">Pimple Detector</string>
+</resources>
