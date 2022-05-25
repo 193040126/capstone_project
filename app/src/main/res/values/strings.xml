@@ -24,4 +24,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_tutorial">Tutorial</string>
     <string name="title_app">Pimple Detector</string>
+    <string name="preview_dialog">Ini adalah pratinjau gambar yang anda pilih</string>
+    <string name="preview_tv">Gambar yang anda pilih\nmelalui kamera/galeri akan\nmuncul pada pratinjau gambar ini</string>
+    <string name="galeri_tv">Ini adalah tombol untuk\nmengambil gambar pada galeri\nmilik anda</string>
+    <string name="camera_tv">Ini adalah tombol untuk\nmengambil gambar pada kamera\nmilik anda</string>
 </resources>
