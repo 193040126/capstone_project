@@ -13,7 +13,6 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.dicoding.diva.pimpledetectku.MainActivity
 import com.dicoding.diva.pimpledetectku.databinding.ActivityCameraBinding
 import com.dicoding.diva.pimpledetectku.ui.createFile
 import com.dicoding.diva.pimpledetectku.ui.home.HomeActivity

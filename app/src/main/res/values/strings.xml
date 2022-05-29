@@ -11,21 +11,29 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="welcome">Selamat Datang</string>
-    <string name="introduce">Saya adalah robot Kecerdasan Buatan\nyang diciptakan untuk menganalisis\njerawat pada wajah anda. Saya bisa\nberpikir dan mempelajari jenis jerawat\nanda, tetapi saya masih dapat\nberkembang.Tolong bersikap baiklah\nkepada saya!\nSaya tidak menjamin akurasi hasil saya,\nsilahkan hubungi dokter untuk mendapat\nnasihat medis yang sebenarnya</string>
+    <string name="introduce">Saya adalah robot Kecerdasan Buatan\nyang diciptakan untuk menganalisis\njerawat pada wajah anda. Saya bisa\nberpikir dan mempelajari jenis jerawat\nanda, tetapi saya masih dapat\nberkembang.\nSaya tidak menjamin akurasi hasil saya,\nsilahkan hubungi dokter untuk mendapat\nnasihat medis yang sebenarnya</string>
     <string name="start">AYO MULAI!</string>
     <string name="jenis_jerawat">Jenis Jerawat</string>
     <string name="solusi_jerawat">Solusi Jerawat</string>
+    <string name="daftar_jerawat">Daftar Jerawat</string>
     <string name="about_us">Tentang Kami</string>
     <string name="info">Info</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="menu_jenis">Jenis Jerawat</string>
+    <string name="cause">Penyebab :</string>
+    <string name="solution">Solusi :</string>
+    <string name="description">Deskripsi :</string>
+    <string name="menu_jenis">Jenis Jerawat :</string>
+    <string name="menu_daftar">Daftar Jerawat</string>
     <string name="menu_solusi">Solusi Jerawat</string>
     <string name="menu_about">Tentang Kami</string>
     <string name="menu_home">Home</string>
     <string name="menu_tutorial">Tutorial</string>
-    <string name="title_app">Pimple Detector</string>
+    <string name="title_app">Pimple Acne\nDetector</string>
     <string name="preview_dialog">Ini adalah pratinjau gambar yang anda pilih</string>
     <string name="preview_tv">Gambar yang anda pilih\nmelalui kamera/galeri akan\nmuncul pada pratinjau gambar ini</string>
     <string name="galeri_tv">Ini adalah tombol untuk\nmengambil gambar pada galeri\nmilik anda</string>
     <string name="camera_tv">Ini adalah tombol untuk\nmengambil gambar pada kamera\nmilik anda</string>
+    <string name="login_gagal">Kamu Gagal Login</string>
+    <string name="salah_akun">Akun Kamu Salah</string>
+    <string name="detect_tv">Ini adalah tombol untuk\nmulai mendeteksi jerawat pada\ngambar wajah anda</string>
 </resources>

@@ -14,7 +14,7 @@ class SolusiJerawatActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val actionBar = supportActionBar
-        actionBar!!.title = getString(R.string.menu_jenis)
+        actionBar!!.title = getString(R.string.menu_solusi)
         actionBar.setDisplayHomeAsUpEnabled(true)
     }
 

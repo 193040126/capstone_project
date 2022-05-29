@@ -28,16 +28,22 @@
         tools:layout="@layout/activity_home" />
 
     <activity
-        android:id="@+id/nav_jenis_jerawat"
-        android:label="@string/menu_jenis"
-        android:name="com.dicoding.diva.pimpledetectku.ui.jenisJerawat.JenisJerawatActivity"
-        tools:layout="@layout/activity_jenis_jerawat"/>
+        android:id="@id/nav_daftar_jerawat"
+        android:name="com.dicoding.diva.pimpledetectku.ui.daftarJerawat.DaftarJerawatActivity"
+        android:label="@string/menu_daftar"
+        tools:layout="@layout/activity_daftar_jerawat" />
 
-    <activity
-        android:id="@+id/nav_solusi_jerawat"
-        android:label="@string/menu_solusi"
-        android:name="com.dicoding.diva.pimpledetectku.ui.solusiJerawat.SolusiJerawatActivity"
-        tools:layout="@layout/activity_solusi_jerawat"/>
+<!--    <activity-->
+<!--        android:id="@+id/nav_jenis_jerawat"-->
+<!--        android:label="@string/menu_jenis"-->
+<!--        android:name="com.dicoding.diva.pimpledetectku.ui.jenisJerawat.JenisJerawatActivity"-->
+<!--        tools:layout="@layout/activity_jenis_jerawat"/>-->
+
+<!--    <activity-->
+<!--        android:id="@+id/nav_solusi_jerawat"-->
+<!--        android:label="@string/menu_solusi"-->
+<!--        android:name="com.dicoding.diva.pimpledetectku.ui.solusiJerawat.SolusiJerawatActivity"-->
+<!--        tools:layout="@layout/activity_solusi_jerawat"/>-->
 
     <activity
         android:id="@+id/nav_about"

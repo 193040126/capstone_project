@@ -12,13 +12,15 @@
             android:id="@+id/nav_home_activity"
             android:icon="@drawable/ic_home"
             android:title="@string/menu_home" />
-
         <item
-            android:id="@+id/nav_jenis_jerawat"
-            android:title="@string/jenis_jerawat"/>
-        <item
-            android:id="@+id/nav_solusi_jerawat"
-            android:title="@string/solusi_jerawat"/>
+            android:id="@+id/nav_daftar_jerawat"
+            android:title="@string/daftar_jerawat"/>
+<!--        <item-->
+<!--            android:id="@+id/nav_jenis_jerawat"-->
+<!--            android:title="@string/jenis_jerawat"/>-->
+<!--        <item-->
+<!--            android:id="@+id/nav_solusi_jerawat"-->
+<!--            android:title="@string/solusi_jerawat"/>-->
     </group>
     <item android:title="@string/info">
         <menu>
