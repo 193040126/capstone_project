@@ -1,6 +1,7 @@
 package com.dicoding.diva.pimpledetectku.ui.main
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.dicoding.diva.pimpledetectku.model.UserModel
@@ -11,4 +12,12 @@ class MainViewModel(private val pref: UserPreference) : ViewModel() {
     fun getUser(): LiveData<UserModel> {
         return pref.getUser().asLiveData()
     }
+
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+
 }

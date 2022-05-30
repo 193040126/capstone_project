@@ -15,8 +15,8 @@ import retrofit2.Response
 class DaftarJerawatViewModel(private val pref: UserPreference) : ViewModel() {
     val listAcnes = MutableLiveData<ArrayList<AcneItems>>()
 
-    private val _tokenMessage = MutableLiveData<String>()
-    val tokenMessage: LiveData<String> = _tokenMessage
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -27,7 +27,7 @@ class DaftarJerawatViewModel(private val pref: UserPreference) : ViewModel() {
 
     fun getAcnesList(token: String){
         val listAcne = ArrayList<AcneItems>()
-        val client = ApiConfig.getApiService().getListAcne("Bearer" + token)
+        val client = ApiConfig.getApiService().getListAcne("Bearer $token")
 
         _isLoading.value = true
         client.enqueue(object : Callback<GetAcneList> {
@@ -41,14 +41,14 @@ class DaftarJerawatViewModel(private val pref: UserPreference) : ViewModel() {
                 } else{
                     Log.d(TAG, "Token: " + token)
                     _isLoading.value = false
-                    _tokenMessage.value = responseBody?.message
+                    _message.value = responseBody?.message
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<GetAcneList>, t: Throwable) {
                 Log.d(TAG, "Token: " + token)
                 _isLoading.value = false
-                _tokenMessage.value = t.message
+                _message.value = t.message
                 Log.e(TAG,"onFailure: ${t.message.toString()}")
             }
 

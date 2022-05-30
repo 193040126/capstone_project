@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -22,6 +23,7 @@ import com.dicoding.diva.pimpledetectku.adapter.ListAcneAdapter
 import com.dicoding.diva.pimpledetectku.api.AcneItems
 import com.dicoding.diva.pimpledetectku.databinding.ActivityDaftarJerawatBinding
 import com.dicoding.diva.pimpledetectku.model.UserPreference
+import com.dicoding.diva.pimpledetectku.ui.main.MainActivity
 import com.dicoding.diva.pimpledetectku.ui.welcome.WelcomeActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -45,22 +47,31 @@ class DaftarJerawatActivity : AppCompatActivity() {
         bundle.putString(EXTRA_TOKEN, token)
 
         setupView()
-
         setupViewModel()
 
         daftarJerawatViewModel.listAcnes.observe(this, {
             setupAction(it)
+            showLoading(false)
         })
 
-        daftarJerawatViewModel.getUser().observe(this,{user->
-            Log.d(TAG,"isLogin: ${user.isLogin}")
-            if(user.isLogin){
-                user.token.let { daftarJerawatViewModel.getAcnesList(user.token) }
-            }
-        })
+//        daftarJerawatViewModel.getUser().observe(this,{ user->
+//            if(user.isLogin){
+//                Log.d(TAG,"Token: ${user.token}")
+//                user.token.let { daftarJerawatViewModel.getAcnesList(user.token) }
+//            } else {
+//                startActivity(Intent(this, WelcomeActivity::class.java))
+//                finish()
+//            }
+//            Log.d(TAG,"isLogin: ${user.isLogin}")
+//        })
+
 
         daftarJerawatViewModel.isLoading.observe(this,{
             showLoading(true)
+        })
+
+        daftarJerawatViewModel.message.observe(this,{
+            Toast.makeText(this,it.toString(), Toast.LENGTH_SHORT).show()
         })
 
     }
@@ -105,10 +116,13 @@ class DaftarJerawatActivity : AppCompatActivity() {
                 val actionBar = supportActionBar
                 actionBar!!.title = getString(R.string.menu_daftar)
                 actionBar.setDisplayHomeAsUpEnabled(true)
+                user.token.let { daftarJerawatViewModel.getAcnesList(user.token) }
+                Log.d(TAG,"Token: ${user.token}")
             } else {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             }
+            Log.d(TAG,"isLogin: ${user.isLogin}")
         }
     }
 

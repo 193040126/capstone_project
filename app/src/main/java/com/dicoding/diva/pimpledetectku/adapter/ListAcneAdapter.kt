@@ -16,7 +16,6 @@ class ListAcneAdapter(private val listAcnes: ArrayList<AcneItems>) : RecyclerVie
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemRowBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-
         return ViewHolder(binding)
     }
 

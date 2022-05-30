@@ -23,7 +23,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.dicoding.diva.pimpledetectku.R
 import com.dicoding.diva.pimpledetectku.ViewModelFactory
 import com.dicoding.diva.pimpledetectku.databinding.ActivityMainBinding
+import com.dicoding.diva.pimpledetectku.model.UserModel
 import com.dicoding.diva.pimpledetectku.model.UserPreference
+import com.dicoding.diva.pimpledetectku.ui.daftarJerawat.DaftarJerawatActivity
 import com.dicoding.diva.pimpledetectku.ui.welcome.WelcomeActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var user: UserModel
     private lateinit var mainViewModel: MainViewModel
 
 
@@ -49,6 +52,8 @@ class MainActivity : AppCompatActivity() {
 
 
         setupView()
+        setupViewModel()
+        setupToken()
         setSupportActionBar(binding.appBarMain.toolbar)
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -56,16 +61,20 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home,
-                R.id.nav_home_activity,
-                R.id.nav_daftar_jerawat,
+        binding.apply {
+            setupToken()
+            appBarConfiguration = AppBarConfiguration(
+                setOf(
+                    R.id.nav_home,
+                    R.id.nav_home_activity,
+                    R.id.nav_daftar_jerawat,
 //                R.id.nav_jenis_jerawat,
 //                R.id.nav_solusi_jerawat,
-                R.id.nav_about
-            ), drawerLayout
-        )
+                    R.id.nav_about
+                ), drawerLayout
+            )
+        }
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
@@ -104,30 +113,30 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-//    private fun setupViewModel() {
-//
-////        welcomeViewModel = ViewModelProvider(
-////            this,
-////            ViewModelFactory(UserPreference.getInstance(dataStore))
-////        )[WelcomeViewModel::class.java]
-////
-////        welcomeViewModel.getUser().observe(this, { user ->
-////            Log.d("Yeay Berhasil Login: ",user.token)
-////            this.user = user
-//        mainViewModel = ViewModelProvider(
-//            this,
-//            ViewModelFactory(UserPreference.getInstance(dataStore))
-//        )[MainViewModel::class.java]
-//
-//        mainViewModel.getUser().observe(this) { user ->
-//            if (user.isLogin) {
-//                Log.e(WelcomeActivity.TAG,"onSuccess: ${responseBody.message}")
-//            } else {
-//                startActivity(Intent(this@MainActivity, WelcomeActivity::class.java))
-//                finish()
-//            }
-//        }
-//    }
+    private fun setupViewModel() {
+        mainViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(UserPreference.getInstance(dataStore))
+        )[MainViewModel::class.java]
+
+        mainViewModel.getUser().observe(this) { user ->
+            if (user.isLogin) {
+                Log.d(TAG,"Token: ${user.token}")
+            } else {
+                startActivity(Intent(this@MainActivity, WelcomeActivity::class.java))
+                finish()
+            }
+        }
+    }
+
+    private fun setupToken(){
+        mainViewModel.getUser().observe(this,{ user ->
+            Intent(this,DaftarJerawatActivity::class.java).let {
+                it.putExtra(DaftarJerawatActivity.EXTRA_TOKEN,user.token)
+                startActivity(it)
+            }
+        })
+    }
 
 
 }

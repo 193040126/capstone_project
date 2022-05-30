@@ -36,4 +36,7 @@
     <string name="login_gagal">Kamu Gagal Login</string>
     <string name="salah_akun">Akun Kamu Salah</string>
     <string name="detect_tv">Ini adalah tombol untuk\nmulai mendeteksi jerawat pada\ngambar wajah anda</string>
+    <string name="label_galeri">Galeri</string>
+    <string name="label_camera">Kamera</string>
+    <string name="label_detector">Deteksi</string>
 </resources>

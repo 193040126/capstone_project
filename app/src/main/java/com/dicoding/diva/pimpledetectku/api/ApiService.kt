@@ -17,11 +17,10 @@ interface ApiService {
         @Field("password") password: String
     ): Call<ResponseLogin>
 
+    @FormUrlEncoded
     @GET("acnes")
     fun getListAcne(
         @Header("Authorization") token: String,
-//        @Field("cause") cause : String,
-//        @Field("solution") solution: String
     ) : Call<GetAcneList>
 }
 
