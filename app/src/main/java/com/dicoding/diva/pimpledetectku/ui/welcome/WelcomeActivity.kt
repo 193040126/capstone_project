@@ -82,31 +82,39 @@ class WelcomeActivity : AppCompatActivity() {
 //                    startActivity(it)
 //                    finish()
 //                }
+//            } else {
+//                setupAction()
 //            }
+            Log.d("TOKEN:  ",user.token)
         })
     }
 
     private fun setupAction(){
         binding.startBtn.setOnClickListener {
-            login()
-            val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
-            intent.let {
-                it.putExtra(MainActivity.EXTRA_MAIN_TOKEN,user.token)
-                it.putExtra(DaftarJerawatActivity.EXTRA_TOKEN, user.token)
-                startActivity(it)
-                finish()
-            }
+            val email = ApiConfig.API_EMAIL
+            val password = ApiConfig.API_PASSWORD
+            postLogin(email, password)
             Log.d(TAG,"Token: ${user.token}")
+
+            val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
+            intent.putExtra(MainActivity.EXTRA_MAIN_TOKEN, user.token)
+            startActivity(intent)
+//            intent.let {
+//                it.putExtra(MainActivity.EXTRA_MAIN_TOKEN,user.token)
+//                startActivity(it)
+//                finish()
+//            }
+//            Log.d(TAG,"Token: ${user.token}")
 //            startActivity(intent)
 //            finish()
         }
     }
 
-    private fun login(){
-        val email = ApiConfig.API_EMAIL
-        val password = ApiConfig.API_PASSWORD
-        postLogin(email, password)
-    }
+//    private fun login(){
+//        val email = ApiConfig.API_EMAIL
+//        val password = ApiConfig.API_PASSWORD
+//        postLogin(email, password)
+//    }
 
     private fun postLogin(email: String, password: String){
         showLoading(true)
@@ -117,12 +125,13 @@ class WelcomeActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if (response.isSuccessful && responseBody != null) {
                     Log.d(TAG,"ResponseBodySuccess")
-                    val error = responseBody.success
-                    if (!error) {
+                    Log.d(TAG,"token: " + user.token)
+                    val success = responseBody.success
+                    if (success) {
                         val user = UserModel(
                             responseBody.data.token,
                             responseBody.data.name,
-                            false
+                            true
                         )
                         welcomeViewModel.login(user)
                         welcomeViewModel._isLoading.value = false

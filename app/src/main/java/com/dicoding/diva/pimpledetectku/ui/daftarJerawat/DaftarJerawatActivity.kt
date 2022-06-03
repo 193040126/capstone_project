@@ -31,7 +31,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class DaftarJerawatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDaftarJerawatBinding
     private lateinit var daftarJerawatViewModel: DaftarJerawatViewModel
-    private lateinit var token: String
+//    private lateinit var token: String
 
     companion object {
         const val EXTRA_TOKEN = "extra_token"
@@ -42,9 +42,9 @@ class DaftarJerawatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDaftarJerawatBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        token = intent.getStringExtra(EXTRA_TOKEN).toString()
-        val bundle = Bundle()
-        bundle.putString(EXTRA_TOKEN, token)
+//        token = intent.getStringExtra(EXTRA_TOKEN).toString()
+//        val bundle = Bundle()
+//        bundle.putString(EXTRA_TOKEN, token)
 
         setupView()
         setupViewModel()
@@ -54,16 +54,16 @@ class DaftarJerawatActivity : AppCompatActivity() {
             showLoading(false)
         })
 
-//        daftarJerawatViewModel.getUser().observe(this,{ user->
-//            if(user.isLogin){
-//                Log.d(TAG,"Token: ${user.token}")
-//                user.token.let { daftarJerawatViewModel.getAcnesList(user.token) }
-//            } else {
-//                startActivity(Intent(this, WelcomeActivity::class.java))
-//                finish()
-//            }
-//            Log.d(TAG,"isLogin: ${user.isLogin}")
-//        })
+        daftarJerawatViewModel.getUser().observe(this,{ user->
+            if(user.isLogin){
+                Log.d(TAG,"Token: ${user.token}")
+                user.token.let { daftarJerawatViewModel.getAcnesList(user.token) }
+            } else {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+            Log.d(TAG,"isLogin: ${user.isLogin}")
+        })
 
 
         daftarJerawatViewModel.isLoading.observe(this,{
@@ -108,18 +108,17 @@ class DaftarJerawatActivity : AppCompatActivity() {
     private fun setupViewModel() {
         daftarJerawatViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
-        )[DaftarJerawatViewModel::class.java]
+            ViewModelFactory(UserPreference.getInstance(dataStore))).get(DaftarJerawatViewModel::class.java)
 
         daftarJerawatViewModel.getUser().observe(this) { user ->
             if (user.isLogin) {
+                Log.d(TAG,"Token: ${user.token}")
                 val actionBar = supportActionBar
                 actionBar!!.title = getString(R.string.menu_daftar)
                 actionBar.setDisplayHomeAsUpEnabled(true)
-                user.token.let { daftarJerawatViewModel.getAcnesList(user.token) }
-                Log.d(TAG,"Token: ${user.token}")
+//                user.token.let { daftarJerawatViewModel.getAcnesList(user.token) }
             } else {
-                startActivity(Intent(this, WelcomeActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
             Log.d(TAG,"isLogin: ${user.isLogin}")

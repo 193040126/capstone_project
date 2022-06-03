@@ -1,5 +1,6 @@
 package com.dicoding.diva.pimpledetectku.ui.welcome
 
+
 import androidx.lifecycle.*
 import com.dicoding.diva.pimpledetectku.model.UserModel
 import com.dicoding.diva.pimpledetectku.model.UserPreference
@@ -21,4 +22,10 @@ class WelcomeViewModel(private val pref: UserPreference) : ViewModel() {
             pref.login(user)
         }
     }
+
+//    fun saveToken(user: UserModel) {
+//        viewModelScope.launch {
+//            pref.saveToken(user)
+//        }
+//    }
 }

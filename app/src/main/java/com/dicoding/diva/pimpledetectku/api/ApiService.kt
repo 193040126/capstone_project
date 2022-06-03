@@ -17,10 +17,9 @@ interface ApiService {
         @Field("password") password: String
     ): Call<ResponseLogin>
 
-    @FormUrlEncoded
     @GET("acnes")
     fun getListAcne(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String
     ) : Call<GetAcneList>
 }
 

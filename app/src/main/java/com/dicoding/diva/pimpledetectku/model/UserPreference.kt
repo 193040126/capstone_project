@@ -1,5 +1,6 @@
 package com.dicoding.diva.pimpledetectku.model
 
+
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -13,7 +14,6 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         @Volatile
         private var INSTANCE: UserPreference? = null
 
-        private val USERID_KEY = stringPreferencesKey("email")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val NAME_KEY = stringPreferencesKey("name")
         private val STATE_KEY = booleanPreferencesKey("state")
@@ -27,13 +27,6 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
-    suspend fun saveUser(userModel: UserModel) {
-        dataStore.edit { preferences ->
-            preferences[TOKEN_KEY] = userModel.token
-            preferences[NAME_KEY] = userModel.name
-            preferences[STATE_KEY] = userModel.isLogin
-        }
-    }
 
     fun getUser(): Flow<UserModel> {
         return dataStore.data.map { preferences ->
@@ -45,6 +38,14 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
+//    suspend fun saveToken(userModel : UserModel) {
+//        dataStore.edit { preferences ->
+//            preferences[TOKEN_KEY] = userModel.token
+//            preferences[NAME_KEY] = userModel.name
+//            preferences[STATE_KEY] = userModel.isLogin
+//        }
+//    }
+
     suspend fun login(userModel : UserModel) {
         dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = userModel.token
@@ -52,4 +53,5 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             preferences[STATE_KEY] = userModel.isLogin
         }
     }
+
 }

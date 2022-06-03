@@ -26,7 +26,7 @@ class ListAcneAdapter(private val listAcnes: ArrayList<AcneItems>) : RecyclerVie
 
     override fun getItemCount(): Int = listAcnes.size
 
-    class ViewHolder(val binding: ItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: ItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: AcneItems){
             binding.apply {
                 nameTv.text = item.name

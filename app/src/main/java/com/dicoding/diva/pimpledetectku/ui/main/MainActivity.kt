@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var user: UserModel
+//    private lateinit var user: UserModel
     private lateinit var mainViewModel: MainViewModel
 
 
@@ -50,10 +50,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         setupView()
         setupViewModel()
-        setupToken()
+//        setupToken()
         setSupportActionBar(binding.appBarMain.toolbar)
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -62,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         binding.apply {
-            setupToken()
+//            setupToken()
             appBarConfiguration = AppBarConfiguration(
                 setOf(
                     R.id.nav_home,
@@ -81,8 +80,9 @@ class MainActivity : AppCompatActivity() {
 //        mainViewModel.getUser().observe(this,{user->
 //            Log.d(TAG,"isLogin: ${user.isLogin}")
 //            if(user.isLogin){
-//                Log.e(TAG,"onSuccess: ${responseBody.message}")
-//            } else {
+//                Log.e(TAG,"Token: " + user.token)
+//            }
+//            else {
 //                startActivity(Intent(this, WelcomeActivity::class.java))
 //                finish()
 //            }
@@ -112,7 +112,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setupViewModel() {
         mainViewModel = ViewModelProvider(
             this,
@@ -129,14 +128,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupToken(){
-        mainViewModel.getUser().observe(this,{ user ->
-            Intent(this,DaftarJerawatActivity::class.java).let {
-                it.putExtra(DaftarJerawatActivity.EXTRA_TOKEN,user.token)
-                startActivity(it)
-            }
-        })
-    }
+//    private fun setupToken(){
+//        mainViewModel.getUser().observe(this,{ user ->
+//            Intent(this,DaftarJerawatActivity::class.java).let {
+//                it.putExtra(DaftarJerawatActivity.EXTRA_TOKEN,user.token)
+//                startActivity(it)
+//            }
+//        })
+//    }
 
 
 }

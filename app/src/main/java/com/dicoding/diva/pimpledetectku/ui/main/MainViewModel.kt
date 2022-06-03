@@ -9,15 +9,20 @@ import com.dicoding.diva.pimpledetectku.model.UserPreference
 
 class MainViewModel(private val pref: UserPreference) : ViewModel() {
 
-    fun getUser(): LiveData<UserModel> {
-        return pref.getUser().asLiveData()
-    }
-
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+
+    fun getUser(): LiveData<UserModel> {
+        return pref.getUser().asLiveData()
+    }
+
+//    fun getToken(): LiveData<UserModel>{
+//        return pref.getToken().asLiveData()
+//    }
+
 
 
 }

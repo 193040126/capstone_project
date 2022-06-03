@@ -38,16 +38,16 @@ data class AcneItems(
 	@field:SerializedName("id")
 	val id: Int,
 	@field:SerializedName("name")
-	val name: String,
+	val name: String?,
 	@field:SerializedName("description")
-	val description: String,
+	val description: String?,
 	@field:SerializedName("cause")
-	val cause: String,
+	val cause: String?,
 	@field:SerializedName("solution")
-	val solution: String,
+	val solution: String?,
 	@field:SerializedName("created_at")
-	val created_at: String,
+	val created_at: String?,
 	@field:SerializedName("updated_at")
-	val updated_at: String
+	val updated_at: String?
 ) : Parcelable
 
