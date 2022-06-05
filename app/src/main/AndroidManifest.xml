@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PimpleDetectKu">
         <activity
+            android:name=".ui.detail.DetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.daftarJerawat.DaftarJerawatActivity"
             android:exported="false" />
         <activity

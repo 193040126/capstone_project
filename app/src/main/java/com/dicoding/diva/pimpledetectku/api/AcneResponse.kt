@@ -37,6 +37,8 @@ data class GetAcneList(
 data class AcneItems(
 	@field:SerializedName("id")
 	val id: Int,
+	@field:SerializedName("type")
+	val type: String?,
 	@field:SerializedName("name")
 	val name: String?,
 	@field:SerializedName("description")
@@ -45,6 +47,10 @@ data class AcneItems(
 	val cause: String?,
 	@field:SerializedName("solution")
 	val solution: String?,
+	@field:SerializedName("image")
+	val image: String?,
+	@field:SerializedName("reference")
+	val reference: String?,
 	@field:SerializedName("created_at")
 	val created_at: String?,
 	@field:SerializedName("updated_at")

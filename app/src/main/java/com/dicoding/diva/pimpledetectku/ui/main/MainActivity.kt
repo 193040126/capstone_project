@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
 
     companion object {
+        val EXTRA_DETAIL ="extra_detail"
         const val EXTRA_MAIN_TOKEN = "extra_main_token"
         const val TAG = "MainActivity"
     }

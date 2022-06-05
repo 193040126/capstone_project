@@ -14,17 +14,15 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.diva.pimpledetectku.R
 import com.dicoding.diva.pimpledetectku.ViewModelFactory
 import com.dicoding.diva.pimpledetectku.adapter.ListAcneAdapter
 import com.dicoding.diva.pimpledetectku.api.AcneItems
 import com.dicoding.diva.pimpledetectku.databinding.ActivityDaftarJerawatBinding
 import com.dicoding.diva.pimpledetectku.model.UserPreference
+import com.dicoding.diva.pimpledetectku.ui.detail.DetailActivity
 import com.dicoding.diva.pimpledetectku.ui.main.MainActivity
-import com.dicoding.diva.pimpledetectku.ui.welcome.WelcomeActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -93,7 +91,7 @@ class DaftarJerawatActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        supportActionBar?.hide()
+        supportActionBar?.title = "Daftar Jerawat"
     }
 
     private fun setupAction(listAcnes: ArrayList<AcneItems>) {
@@ -103,6 +101,20 @@ class DaftarJerawatActivity : AppCompatActivity() {
             acnesRv.setHasFixedSize(true)
             acnesRv.adapter = adapter
         }
+
+        adapter.setOnItemClickCallback(object : ListAcneAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: AcneItems) {
+                val intentToDetail = Intent(this@DaftarJerawatActivity, DetailActivity::class.java)
+                intentToDetail.putExtra("AcneItems", data)
+                startActivity(intentToDetail)
+                showSelectedAcne(data)
+            }
+
+        })
+    }
+
+    private fun showSelectedAcne(acne: AcneItems){
+        Toast.makeText(this, "Detail Dari " + acne.name, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupViewModel() {
@@ -116,7 +128,6 @@ class DaftarJerawatActivity : AppCompatActivity() {
                 val actionBar = supportActionBar
                 actionBar!!.title = getString(R.string.menu_daftar)
                 actionBar.setDisplayHomeAsUpEnabled(true)
-//                user.token.let { daftarJerawatViewModel.getAcnesList(user.token) }
             } else {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()

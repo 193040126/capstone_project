@@ -99,6 +99,7 @@ class WelcomeActivity : AppCompatActivity() {
             val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
             intent.putExtra(MainActivity.EXTRA_MAIN_TOKEN, user.token)
             startActivity(intent)
+            finish()
 //            intent.let {
 //                it.putExtra(MainActivity.EXTRA_MAIN_TOKEN,user.token)
 //                startActivity(it)

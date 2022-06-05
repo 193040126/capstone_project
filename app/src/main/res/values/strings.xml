@@ -22,6 +22,7 @@
     <string name="cause">Penyebab :</string>
     <string name="solution">Solusi :</string>
     <string name="description">Deskripsi :</string>
+    <string name="title_detail">Jerawat %1$s,</string>
     <string name="menu_jenis">Jenis Jerawat :</string>
     <string name="menu_daftar">Daftar Jerawat</string>
     <string name="menu_solusi">Solusi Jerawat</string>
