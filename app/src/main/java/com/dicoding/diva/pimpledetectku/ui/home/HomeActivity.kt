@@ -28,6 +28,7 @@ import java.io.File
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private var getFile: File? = null
+    private lateinit var bitmap: Bitmap
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -126,8 +127,12 @@ class HomeActivity : AppCompatActivity() {
             val selectedImg: Uri = result.data?.data as Uri
             val myFile = uriToFile(selectedImg, this@HomeActivity)
             getFile = myFile
-            binding.previewImage.setImageURI(selectedImg)
+//            binding.previewImage.setImageURI(selectedImg)
 
+            bitmap = BitmapFactory.decodeFile(getFile?.path)
+
+//            bitmap = result.data?.extras?.get("data") as Bitmap
+            binding.previewImage.setImageBitmap(bitmap)
         }
     }
 
@@ -141,15 +146,16 @@ class HomeActivity : AppCompatActivity() {
         val labelFile = application.assets.open(label).bufferedReader().use{ it.readText() }.split("\n")
 
 
-        val resized = Bitmap.createScaledBitmap(result, 224, 224, true)
+        val resized = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
         val model = Generated.newInstance(this)
         val tBuffer = TensorImage.fromBitmap(resized)
         val byteBuffer = tBuffer.buffer
+        Log.d("shape", byteBuffer.toString())
 
         // creates inputs for reference.
         val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
         inputFeature0.loadBuffer(byteBuffer)
-
+        Log.d("shape", inputFeature0.toString())
 
         // Runs model inference and gets result.
         val outputs = model.process(inputFeature0)
