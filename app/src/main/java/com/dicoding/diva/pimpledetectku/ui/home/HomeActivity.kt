@@ -3,26 +3,33 @@ package com.dicoding.diva.pimpledetectku.ui.home
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.dicoding.diva.pimpledetectku.R
 import com.dicoding.diva.pimpledetectku.databinding.ActivityHomeBinding
+import com.dicoding.diva.pimpledetectku.ml.Generated
 import com.dicoding.diva.pimpledetectku.ui.camera.CameraActivity
+import com.dicoding.diva.pimpledetectku.ui.hasil.HasilActivity
 import com.dicoding.diva.pimpledetectku.ui.rotateBitmap
 import com.dicoding.diva.pimpledetectku.ui.uriToFile
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private var getFile: File? = null
 
-    companion object{
+    companion object {
         const val CAMERA_X_RESULT = 200
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
@@ -36,6 +43,8 @@ class HomeActivity : AppCompatActivity() {
         actionBar!!.title = getString(R.string.menu_home)
         actionBar.setDisplayHomeAsUpEnabled(true)
 
+
+
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
                 this,
@@ -45,6 +54,11 @@ class HomeActivity : AppCompatActivity() {
         }
         binding.cameraBtn.setOnClickListener { startCameraX() }
         binding.galeriBtn.setOnClickListener { startGallery() }
+        binding.detectorBtn.setOnClickListener { classification()
+//            val intent = Intent(this@HomeActivity, HasilActivity::class.java)
+//            startActivity(intent)
+//            finish()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -100,6 +114,7 @@ class HomeActivity : AppCompatActivity() {
                 isBackCamera
             )
 
+
             binding.previewImage.setImageBitmap(result)
         }
     }
@@ -112,6 +127,59 @@ class HomeActivity : AppCompatActivity() {
             val myFile = uriToFile(selectedImg, this@HomeActivity)
             getFile = myFile
             binding.previewImage.setImageURI(selectedImg)
+
         }
     }
+
+    private fun classification() {
+//        val myFile = intent.getSerializableExtra("picture") as File
+//        getFile = myFile
+        val result = BitmapFactory.decodeFile(getFile?.path)
+
+        //load label
+        val label = "label.txt"
+        val labelFile = application.assets.open(label).bufferedReader().use{ it.readText() }.split("\n")
+
+
+        val resized = Bitmap.createScaledBitmap(result, 224, 224, true)
+        val model = Generated.newInstance(this)
+        val tBuffer = TensorImage.fromBitmap(resized)
+        val byteBuffer = tBuffer.buffer
+
+        // creates inputs for reference.
+        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+        inputFeature0.loadBuffer(byteBuffer)
+
+
+        // Runs model inference and gets result.
+        val outputs = model.process(inputFeature0)
+        val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+
+        val max = getMax(outputFeature0.floatArray)
+
+        binding.resultTv.text = labelFile[max]
+        // Releases model resources if no longer used.
+        model.close()
+
+        for (i in 0..5){
+            Log.d("Hasil", outputFeature0.floatArray[i].toString() + "" + labelFile[i])
+        }
+        Log.d("qwwqd", outputs.toString())
+    }
+
+    private fun getMax(arr:FloatArray) : Int{
+        var ind = 0;
+        var min = 0.0f;
+
+        for(i in 0..5)
+        {
+            if(arr[i] > min)
+            {
+                min = arr[i]
+                ind = i;
+            }
+        }
+        return ind
+    }
+
 }
