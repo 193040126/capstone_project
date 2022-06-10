@@ -20,15 +20,23 @@ import com.dicoding.diva.pimpledetectku.ui.camera.CameraActivity
 import com.dicoding.diva.pimpledetectku.ui.rotateBitmap
 import com.dicoding.diva.pimpledetectku.ui.uriToFile
 import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
-import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import org.tensorflow.lite.support.image.ops.ResizeOp
 import java.io.File
-import java.nio.ByteBuffer
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private var getFile: File? = null
-    private lateinit var bitmap: Bitmap
+//    private lateinit var bitmap: Bitmap
+
+    private val tfImageProcesor by lazy{
+        ImageProcessor.Builder()
+            .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR))
+            .build()
+    }
+
+    private val imageTensor = TensorImage(DataType.FLOAT32)
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -127,12 +135,12 @@ class HomeActivity : AppCompatActivity() {
             val selectedImg: Uri = result.data?.data as Uri
             val myFile = uriToFile(selectedImg, this@HomeActivity)
             getFile = myFile
-//            binding.previewImage.setImageURI(selectedImg)
+            binding.previewImage.setImageURI(selectedImg)
 
-            bitmap = BitmapFactory.decodeFile(getFile?.path)
-
-//            bitmap = result.data?.extras?.get("data") as Bitmap
-            binding.previewImage.setImageBitmap(bitmap)
+//            bitmap = BitmapFactory.decodeFile(getFile?.path)
+//
+////            bitmap = result.data?.extras?.get("data") as Bitmap
+//            binding.previewImage.setImageBitmap(bitmap)
         }
     }
 
@@ -146,23 +154,29 @@ class HomeActivity : AppCompatActivity() {
         val labelFile = application.assets.open(label).bufferedReader().use{ it.readText() }.split("\n")
 
         // resized kayaknya masih INT bukan float
-        val resized = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
+        val resized = result.copy(Bitmap.Config.ARGB_8888, true)
+        imageTensor.load(resized)
+
+        val resultResized = tfImageProcesor.process(imageTensor)
+
         val model = Generated.newInstance(this)
+
+
 //        val tBuffer = TensorImage.fromBitmap(resized)
 //        val byteBuffer = tBuffer.buffer
-        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+//        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
 
 //        val input = Bitmap.createScaledBitmap(imageBitmap, 224, 224, true)
-        val image = TensorImage(DataType.FLOAT32)
-        image.load(resized)
-        val byteBuffer: ByteBuffer = image.buffer
-        inputFeature0.loadBuffer(byteBuffer)
-        Log.d("shape", byteBuffer.toString())
+//        val image = TensorImage(DataType.FLOAT32)
+//        image.load(resized)
+//        val byteBuffer: ByteBuffer = image.buffer
+//        inputFeature0.loadBuffer(byteBuffer)
+//        Log.d("shape", byteBuffer.toString())
 
         // creates inputs for reference.
 
         // Runs model inference and gets result.
-        val outputs = model.process(inputFeature0)
+        val outputs = model.process(resultResized.tensorBuffer)
         val outputFeature0 = outputs.outputFeature0AsTensorBuffer
 
         val max = getMax(outputFeature0.floatArray)
@@ -172,7 +186,7 @@ class HomeActivity : AppCompatActivity() {
         model.close()
 
         for (i in 0..5){
-            Log.d("Hasil", outputFeature0.floatArray[i].toString() + "" + labelFile[i])
+            Log.d("Hasil", outputFeature0.floatArray[i].toString() + " " + labelFile[i])
         }
         Log.d("qwwqd", outputs.toString())
     }
