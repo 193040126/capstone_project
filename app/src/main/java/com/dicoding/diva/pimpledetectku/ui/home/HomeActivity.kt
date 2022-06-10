@@ -15,7 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.dicoding.diva.pimpledetectku.R
 import com.dicoding.diva.pimpledetectku.databinding.ActivityHomeBinding
-import com.dicoding.diva.pimpledetectku.ml.Generated
+import com.dicoding.diva.pimpledetectku.ml.Model2
 import com.dicoding.diva.pimpledetectku.ui.camera.CameraActivity
 import com.dicoding.diva.pimpledetectku.ui.rotateBitmap
 import com.dicoding.diva.pimpledetectku.ui.uriToFile
@@ -159,7 +159,7 @@ class HomeActivity : AppCompatActivity() {
 
         val resultResized = tfImageProcesor.process(imageTensor)
 
-        val model = Generated.newInstance(this)
+        val model = Model2.newInstance(this)
 
 
 //        val tBuffer = TensorImage.fromBitmap(resized)
@@ -188,18 +188,18 @@ class HomeActivity : AppCompatActivity() {
         for (i in 0..5){
             Log.d("Hasil", outputFeature0.floatArray[i].toString() + " " + labelFile[i])
         }
-        Log.d("qwwqd", outputs.toString())
+        Log.d("Output", outputs.toString())
     }
 
-    private fun getMax(arr:FloatArray) : Int{
+    private fun getMax(array:FloatArray) : Int{
         var ind = 0;
         var min = 0.0f;
 
         for(i in 0..5)
         {
-            if(arr[i] > min)
+            if(array[i] > min)
             {
-                min = arr[i]
+                min = array[i]
                 ind = i;
             }
         }

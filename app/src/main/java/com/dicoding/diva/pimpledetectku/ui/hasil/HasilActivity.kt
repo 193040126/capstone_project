@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.dicoding.diva.pimpledetectku.databinding.ActivityHasilBinding
-import com.dicoding.diva.pimpledetectku.ml.Generated
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
