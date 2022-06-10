@@ -17,6 +17,7 @@ import com.dicoding.diva.pimpledetectku.R
 import com.dicoding.diva.pimpledetectku.databinding.ActivityHomeBinding
 import com.dicoding.diva.pimpledetectku.ml.Model2
 import com.dicoding.diva.pimpledetectku.ui.camera.CameraActivity
+import com.dicoding.diva.pimpledetectku.ui.hasil.HasilActivity
 import com.dicoding.diva.pimpledetectku.ui.rotateBitmap
 import com.dicoding.diva.pimpledetectku.ui.uriToFile
 import org.tensorflow.lite.DataType
@@ -63,10 +64,12 @@ class HomeActivity : AppCompatActivity() {
         }
         binding.cameraBtn.setOnClickListener { startCameraX() }
         binding.galeriBtn.setOnClickListener { startGallery() }
-        binding.detectorBtn.setOnClickListener { classification()
-//            val intent = Intent(this@HomeActivity, HasilActivity::class.java)
-//            startActivity(intent)
-//            finish()
+        binding.detectorBtn.setOnClickListener {
+//            classification()
+            val intent = Intent(this@HomeActivity, HasilActivity::class.java)
+            intent.putExtra("image", getFile)
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -145,65 +148,54 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun classification() {
-//        val myFile = intent.getSerializableExtra("picture") as File
-//        getFile = myFile
-        val result = BitmapFactory.decodeFile(getFile?.path)
-
-        //load label
-        val label = "label.txt"
-        val labelFile = application.assets.open(label).bufferedReader().use{ it.readText() }.split("\n")
-
-        // resized kayaknya masih INT bukan float
-        val resized = result.copy(Bitmap.Config.ARGB_8888, true)
-        imageTensor.load(resized)
-
-        val resultResized = tfImageProcesor.process(imageTensor)
-
-        val model = Model2.newInstance(this)
-
-
-//        val tBuffer = TensorImage.fromBitmap(resized)
-//        val byteBuffer = tBuffer.buffer
-//        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
-
-//        val input = Bitmap.createScaledBitmap(imageBitmap, 224, 224, true)
-//        val image = TensorImage(DataType.FLOAT32)
-//        image.load(resized)
-//        val byteBuffer: ByteBuffer = image.buffer
-//        inputFeature0.loadBuffer(byteBuffer)
-//        Log.d("shape", byteBuffer.toString())
-
-        // creates inputs for reference.
-
-        // Runs model inference and gets result.
-        val outputs = model.process(resultResized.tensorBuffer)
-        val outputFeature0 = outputs.outputFeature0AsTensorBuffer
-
-        val max = getMax(outputFeature0.floatArray)
-
-        binding.resultTv.text = labelFile[max]
-        // Releases model resources if no longer used.
-        model.close()
-
-        for (i in 0..5){
-            Log.d("Hasil", outputFeature0.floatArray[i].toString() + " " + labelFile[i])
-        }
-        Log.d("Output", outputs.toString())
+////        val myFile = intent.getSerializableExtra("picture") as File
+////        getFile = myFile
+//        val result = BitmapFactory.decodeFile(getFile?.path)
+//
+//        //load label
+//        val label = "label.txt"
+//        val labelFile = application.assets.open(label).bufferedReader().use{ it.readText() }.split("\n")
+//
+//        // resized kayaknya masih INT bukan float
+//        val resized = result.copy(Bitmap.Config.ARGB_8888, true)
+//        imageTensor.load(resized)
+//
+//        val resultResized = tfImageProcesor.process(imageTensor)
+//
+//        val model = Model2.newInstance(this)
+//
+//        // creates inputs for reference.
+//
+//        // Runs model inference and gets result.
+//        val outputs = model.process(resultResized.tensorBuffer)
+//        val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+//
+//        val max = getMax(outputFeature0.floatArray)
+//
+//        binding.resultTv.text = labelFile[max]
+//
+//        // Releases model resources if no longer used.
+//        model.close()
+//
+//        for (i in 0..5){
+//            Log.d("Hasil", outputFeature0.floatArray[i].toString() + " " + labelFile[i])
+//        }
+//        Log.d("Output", outputs.toString())
     }
 
-    private fun getMax(array:FloatArray) : Int{
-        var ind = 0;
-        var min = 0.0f;
-
-        for(i in 0..5)
-        {
-            if(array[i] > min)
-            {
-                min = array[i]
-                ind = i;
-            }
-        }
-        return ind
-    }
+//    private fun getMax(array:FloatArray) : Int{
+//        var ind = 0;
+//        var min = 0.0f;
+//
+//        for(i in 0..5)
+//        {
+//            if(array[i] > min)
+//            {
+//                min = array[i]
+//                ind = i;
+//            }
+//        }
+//        return ind
+//    }
 
 }
