@@ -6,24 +6,24 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.dicoding.diva.pimpledetectku.R
 import com.dicoding.diva.pimpledetectku.databinding.ActivityHomeBinding
 import com.dicoding.diva.pimpledetectku.ml.Generated
 import com.dicoding.diva.pimpledetectku.ui.camera.CameraActivity
-import com.dicoding.diva.pimpledetectku.ui.hasil.HasilActivity
 import com.dicoding.diva.pimpledetectku.ui.rotateBitmap
 import com.dicoding.diva.pimpledetectku.ui.uriToFile
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
+import java.nio.ByteBuffer
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -145,17 +145,21 @@ class HomeActivity : AppCompatActivity() {
         val label = "label.txt"
         val labelFile = application.assets.open(label).bufferedReader().use{ it.readText() }.split("\n")
 
-
+        // resized kayaknya masih INT bukan float
         val resized = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
         val model = Generated.newInstance(this)
-        val tBuffer = TensorImage.fromBitmap(resized)
-        val byteBuffer = tBuffer.buffer
+//        val tBuffer = TensorImage.fromBitmap(resized)
+//        val byteBuffer = tBuffer.buffer
+        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+
+//        val input = Bitmap.createScaledBitmap(imageBitmap, 224, 224, true)
+        val image = TensorImage(DataType.FLOAT32)
+        image.load(resized)
+        val byteBuffer: ByteBuffer = image.buffer
+        inputFeature0.loadBuffer(byteBuffer)
         Log.d("shape", byteBuffer.toString())
 
         // creates inputs for reference.
-        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
-        inputFeature0.loadBuffer(byteBuffer)
-        Log.d("shape", inputFeature0.toString())
 
         // Runs model inference and gets result.
         val outputs = model.process(inputFeature0)
