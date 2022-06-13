@@ -1,6 +1,6 @@
 blackhead 
-nodul 
+nodules
 normal 
-papula 
-pustula 
+papule
+pustules
 whitehead

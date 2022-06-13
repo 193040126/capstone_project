@@ -1,23 +1,59 @@
 package com.dicoding.diva.pimpledetectku.ui.hasil
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.dicoding.diva.pimpledetectku.R
+import com.dicoding.diva.pimpledetectku.ViewModelFactory
+import com.dicoding.diva.pimpledetectku.adapter.ListAcneAdapter
+import com.dicoding.diva.pimpledetectku.adapter.ResultAcneAdapter
+import com.dicoding.diva.pimpledetectku.api.*
 import com.dicoding.diva.pimpledetectku.databinding.ActivityHasilBinding
 import com.dicoding.diva.pimpledetectku.ml.Model2
+import com.dicoding.diva.pimpledetectku.model.ResultModel
+import com.dicoding.diva.pimpledetectku.model.ResultPreference
+import com.dicoding.diva.pimpledetectku.model.UserModel
+import com.dicoding.diva.pimpledetectku.model.UserPreference
+import com.dicoding.diva.pimpledetectku.ui.daftarJerawat.DaftarJerawatActivity
+import com.dicoding.diva.pimpledetectku.ui.detail.DetailActivity
+import com.dicoding.diva.pimpledetectku.ui.main.MainActivity
+import com.dicoding.diva.pimpledetectku.ui.welcome.WelcomeActivity
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
+import org.tensorflow.lite.support.label.Category
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class HasilActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHasilBinding
+    private lateinit var hasilViewModel: HasilViewModel
+
     private var getFile: File? = null
+
+    val probabilityAsCategory = mutableListOf<Category>()
 
     private val tfImageProcesor by lazy{
         ImageProcessor.Builder()
@@ -25,6 +61,11 @@ class HasilActivity : AppCompatActivity() {
             .build()
     }
     private val imageTensor = TensorImage(DataType.FLOAT32)
+
+    companion object {
+        const val TAG = "HasilActivity"
+        const val EXTRA_TOKEN = "extra_token"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +79,6 @@ class HasilActivity : AppCompatActivity() {
         getFile = myFile
         val result = BitmapFactory.decodeFile(getFile?.path)
 
-//        val extras = intent.extras
-//        val byteArray = extras!!.getByteArray("image")
-//        val bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray!!.size)
-//        val image: ImageView = findViewById<View>() as ImageView
-//        image.setImageBitmap(bmp)
 
         //load file txt
         val fileName = "label.txt"
@@ -59,33 +95,32 @@ class HasilActivity : AppCompatActivity() {
         val outputs = model.process(resultResized.tensorBuffer)
         val outputFeature0 = outputs.outputFeature0AsTensorBuffer
 
-        val max = getMax(outputFeature0.floatArray)
-        binding.resultNameTv.text = labelFile[max]
-        // Releases model resources if no longer used.
-
-        for (i in 0..5){
+        for (i in 0..outputFeature0.floatArray.size - 1){
+            probabilityAsCategory.add(Category(labelFile[i], outputFeature0.floatArray[i]))
             Log.d("Hasil", outputFeature0.floatArray[i].toString() + " " + labelFile[i])
         }
         Log.d("Output", outputs.toString())
 
+        val outputAcne = probabilityAsCategory.apply { sortByDescending { it.score } }
+
+        binding.resultNameTv.text = outputAcne[0].label
+
+        // Releases model resources if no longer used.
 
         model.close()
 
         binding.imageResultIv.setImageBitmap(result)
-    }
 
-    private fun getMax(array:FloatArray) : Int{
-        var ind = 0;
-        var min = 0.0f;
 
-        for(i in 0..5)
-        {
-            if(array[i] > min)
-            {
-                min = array[i]
-                ind = i;
-            }
+        binding.daftarJerawatBtn.setOnClickListener {
+            val intent = Intent(this@HasilActivity, DaftarJerawatActivity::class.java)
+            startActivity(intent)
+            finish()
         }
-        return ind
     }
+
+    private fun showLoading(isLoading: Boolean){
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
 }

@@ -11,7 +11,6 @@ data class Response(
 	val token : String,
 	@field:SerializedName("name")
 	val name : String
-
 )
 
 
@@ -32,6 +31,43 @@ data class GetAcneList(
 	@field:SerializedName("message")
 	val message: String
 )
+
+//data class GetAcneResult(
+//	@field:SerializedName("success")
+//	val success: Boolean,
+//	@field:SerializedName("data")
+//	val data: AcneItemsResult,
+//	@field:SerializedName("message")
+//	val message: String
+//)
+
+@Parcelize
+data class AcneItemsResult(
+	@field:SerializedName("id")
+	val id: Int,
+	@field:SerializedName("type")
+	val type: String,
+	@field:SerializedName("name")
+	val name: String,
+	@field:SerializedName("description")
+	val description: String,
+	@field:SerializedName("cause")
+	val cause: String,
+	@field:SerializedName("solution")
+	val solution: String,
+	@field:SerializedName("image")
+	val image: String,
+	@field:SerializedName("reference")
+	val reference: String,
+	@field:SerializedName("created_at")
+	val created_at: String,
+	@field:SerializedName("updated_at")
+	val updated_at: String,
+	@field:SerializedName("success")
+	val success: Boolean,
+	@field:SerializedName("message")
+	val message: String
+) : Parcelable
 
 @Parcelize
 data class AcneItems(

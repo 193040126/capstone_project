@@ -23,8 +23,8 @@
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/activity_about.xml" value="0.11980749746707194" />
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/activity_camera.xml" value="0.1" />
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/activity_daftar_jerawat.xml" value="0.1" />
-        <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/activity_detail.xml" value="0.16" />
-        <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/activity_hasil.xml" value="0.16" />
+        <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/activity_detail.xml" value="0.264" />
+        <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/activity_hasil.xml" value="0.264" />
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/activity_home.xml" value="0.264" />
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/activity_jenis_jerawat.xml" value="0.11980749746707194" />
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/activity_main.xml" value="0.152" />
@@ -38,6 +38,7 @@
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/fragment_preview_dialog.xml" value="0.1" />
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/fragment_slideshow.xml" value="0.11980749746707194" />
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/item_row.xml" value="0.2" />
+        <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/item_row_result.xml" value="0.1" />
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/nav_header_main.xml" value="0.2" />
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/layout/preview_popup.xml" value="0.11342592592592593" />
         <entry key="..\:/Users/msdiv/AndroidStudioProjects/PimpleDetectKu/app/src/main/res/menu/activity_main_drawer.xml" value="0.24256410256410257" />

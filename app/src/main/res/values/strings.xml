@@ -36,9 +36,11 @@
     <string name="galeri_tv">Ini adalah tombol untuk\nmengambil gambar pada galeri\nmilik anda</string>
     <string name="camera_tv">Ini adalah tombol untuk\nmengambil gambar pada kamera\nmilik anda</string>
     <string name="login_gagal">Kamu Gagal Login</string>
+    <string name="result_gagal">Result Gagal Ditampilkan</string>
     <string name="salah_akun">Akun Kamu Salah</string>
     <string name="detect_tv">Ini adalah tombol untuk\nmulai mendeteksi jerawat pada\ngambar wajah anda</string>
     <string name="label_galeri">Galeri</string>
     <string name="label_camera">Kamera</string>
     <string name="label_detector">Deteksi</string>
+    <string name="keterangan_result">Keterangan :\nUntuk melihat solusi dari jerawat yang anda alami, kunjungi halaman Daftar Jerawat dibawah ini</string>
 </resources>

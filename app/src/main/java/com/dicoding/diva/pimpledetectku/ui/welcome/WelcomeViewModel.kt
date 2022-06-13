@@ -23,9 +23,4 @@ class WelcomeViewModel(private val pref: UserPreference) : ViewModel() {
         }
     }
 
-//    fun saveToken(user: UserModel) {
-//        viewModelScope.launch {
-//            pref.saveToken(user)
-//        }
-//    }
 }

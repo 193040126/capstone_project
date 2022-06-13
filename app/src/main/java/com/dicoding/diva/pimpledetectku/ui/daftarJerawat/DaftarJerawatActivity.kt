@@ -40,9 +40,6 @@ class DaftarJerawatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDaftarJerawatBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        token = intent.getStringExtra(EXTRA_TOKEN).toString()
-//        val bundle = Bundle()
-//        bundle.putString(EXTRA_TOKEN, token)
 
         setupView()
         setupViewModel()

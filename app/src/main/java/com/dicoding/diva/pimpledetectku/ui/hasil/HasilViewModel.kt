@@ -1,14 +1,15 @@
-package com.dicoding.diva.pimpledetectku.ui.home
+package com.dicoding.diva.pimpledetectku.ui.hasil
+
 
 import androidx.lifecycle.*
-import com.dicoding.diva.pimpledetectku.api.AcneItemsResult
+import com.dicoding.diva.pimpledetectku.api.*
 import com.dicoding.diva.pimpledetectku.model.ResultModel
 import com.dicoding.diva.pimpledetectku.model.ResultPreference
 import com.dicoding.diva.pimpledetectku.model.UserModel
 import com.dicoding.diva.pimpledetectku.model.UserPreference
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val pref : UserPreference) : ViewModel() {
+class HasilViewModel(private val pref : UserPreference) : ViewModel() {
     val listAcneResult = MutableLiveData<List<AcneItemsResult>>()
 
     val _message = MutableLiveData<String>()
@@ -30,4 +31,16 @@ class HomeViewModel(private val pref : UserPreference) : ViewModel() {
 //        }
 //    }
 
+}
+
+class HasilViewModelFactory( private val pref: UserPreference) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return when {
+            modelClass.isAssignableFrom(HasilViewModel::class.java) -> {
+                HasilViewModel(pref) as T
+            }
+            else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
+        }
+    }
 }

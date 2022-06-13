@@ -21,9 +21,6 @@ class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.New
             modelClass.isAssignableFrom(DaftarJerawatViewModel::class.java) -> {
                 DaftarJerawatViewModel(pref) as T
             }
-//            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
-//                MapsViewModel(pref) as T
-//            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

@@ -21,6 +21,12 @@ interface ApiService {
     fun getListAcne(
         @Header("Authorization") token: String
     ) : Call<GetAcneList>
+
+    @GET("acne")
+    fun getResult(
+        @Header("Authorization") token: String,
+        @Query("type") type: String
+    ) : Call<AcneItemsResult>
 }
 
 class ApiConfig {
@@ -41,7 +47,7 @@ class ApiConfig {
                 .build()
             return retrofit.create(ApiService::class.java)
         }
-        const val BASE_URL = "http://172.104.42.206/api/"
+        const val BASE_URL = "http://34.134.27.72/api/"
         const val API_EMAIL = "api@mail.com"
         const val API_PASSWORD = "]4MZb@2#A:X8[sU'"
     }
